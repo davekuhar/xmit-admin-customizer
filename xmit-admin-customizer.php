@@ -15,27 +15,28 @@ defined('ABSPATH') or die("Get lost!");
 
 add_action('wp_head', 'xmit_wpengine_staging_notice');
 add_action('admin_head', 'xmit_wpengine_staging_notice');
+
 function xmit_wpengine_staging_notice() {
 ?>
 <script type="text/javascript">
-jQuery(document).ready(function($) {
-  var loc = window.location.href; // returns the full URL
-  if(/staging/.test(loc)) {
-    $('body').addClass('staging');
-  }
-  if(/sitedistrict/.test(loc)) {
-    $('body').addClass('sitedistrict');
-  }
-  if(/local/.test(loc)) {
-    $('body').addClass('localdev');
-  }
-  if(/cc/.test(loc)) {
-    $('body').addClass('localdev');
-  }
-  if(/cc/.dev.wpenginepowered(loc)) {
-    $('body').addClass('wpedev');
-  }
-});
+    jQuery(document).ready(function($) {
+        var loc = window.location.href; // returns the full URL
+        if (/staging/.test(loc)) {
+            $('body').addClass('staging');
+        }
+        if (/sitedistrict/.test(loc)) {
+            $('body').addClass('sitedistrict');
+        }
+        if (/local/.test(loc)) {
+            $('body').addClass('localdev');
+        }
+        if (/cc/.test(loc)) {
+            $('body').addClass('localdev');
+        }
+        if (/cc\.dev\.wpenginepowered/.test(loc)) {
+            $('body').addClass('wpedev');
+        }
+    });
 </script>
 <?php
 }
