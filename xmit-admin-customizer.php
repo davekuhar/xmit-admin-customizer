@@ -32,6 +32,9 @@ jQuery(document).ready(function($) {
   if(/cc/.test(loc)) {
     $('body').addClass('localdev');
   }
+  if(/cc/.dev.wpenginepowered(loc)) {
+    $('body').addClass('wpedev');
+  }
 });
 </script>
 <?php
@@ -71,7 +74,8 @@ function xmit_admin_customizer() {
            		content:" - STAGING SITE"
            }
            
-           body.sitedistrict #wp-admin-bar-site-name > a.ab-item:after {
+           body.sitedistrict #wp-admin-bar-site-name > a.ab-item:after,
+	   body.wpedev #wp-admin-bar-site-name > a.ab-item:after {
            		content:" - DEV SITE";
            }
            
