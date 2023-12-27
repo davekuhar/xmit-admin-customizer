@@ -13,18 +13,34 @@
 //check for the existence of the ABSPATH constant defined by WordPress when loaded. If the constant exists, WordPress is requesting access to load this file. If the constant does not exist, someone is trying to directly access this file and we want to stop them immediately.
 defined('ABSPATH') or die("Get lost!");
 
+// make sure jquery is actually loaded
+function enqueue_jquery() {
+    wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'enqueue_jquery');
+
+// enqueue javascript properly
+function xmit_enqueue_scripts() {
+    wp_enqueue_script('xmit-custom-script', plugin_dir_url(__FILE__) . 'path-to-your-script.js', array('jquery'), '1.0', true);
+    wp_localize_script('xmit-custom-script', 'xmit_vars', array(
+        'nonce' => wp_create_nonce('xmit-nonce')
+    ));
+}
+add_action('wp_enqueue_scripts', 'xmit_enqueue_scripts');
+
+
 add_action('wp_head', 'xmit_wpengine_staging_notice');
 add_action('admin_head', 'xmit_wpengine_staging_notice');
 
 function xmit_wpengine_staging_notice() {
 ?>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        var loc = window.location.href; // returns the full URL
-        if (/staging/.test(loc)) {
+jQuery(document).ready(function($) {
+    var loc = window.location.href; // returns the full URL
+    	if (/staging/.test(loc)) {
             $('body').addClass('staging');
-        }
-        if (/sitedistrict/.test(loc)) {
+    	}
+	if (/sitedistrict/.test(loc)) {
             $('body').addClass('sitedistrict');
         }
         if (/local/.test(loc)) {
